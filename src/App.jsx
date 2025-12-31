@@ -238,14 +238,14 @@ export default function App() {
               {
                 label: 'Personality',
                 value: 'Personality',
-                icon: 'personality_icon.png',
+                icon: 'personality_icon.webp',
               },
-              { label: 'Buff', value: 'Buff', icon: 'buff_icon.png' },
-              { label: 'Debuff', value: 'Debuff', icon: 'debuff_icon.png' },
-              { label: 'Weapon', value: 'Weapon', icon: 'weapon_icon.png' },
-              { label: 'Helper', value: 'Helper', icon: 'helper_icon.png' },
-              { label: 'Wild', value: 'Wild', icon: 'wild_icon.png' },
-              { label: 'Trap', value: 'Trap', icon: 'trap_icon.png' },
+              { label: 'Buff', value: 'Buff', icon: 'buff_icon.webp' },
+              { label: 'Debuff', value: 'Debuff', icon: 'debuff_icon.webp' },
+              { label: 'Weapon', value: 'Weapon', icon: 'weapon_icon.webp' },
+              { label: 'Helper', value: 'Helper', icon: 'helper_icon.webp' },
+              { label: 'Wild', value: 'Wild', icon: 'wild_icon.webp' },
+              { label: 'Trap', value: 'Trap', icon: 'trap_icon.webp' },
             ]}
             value={cardFilter}
             onChange={setCardFilter}

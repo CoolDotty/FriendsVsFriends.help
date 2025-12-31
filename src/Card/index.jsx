@@ -65,8 +65,8 @@ export default function Card(props) {
             style={{
               backgroundImage:
                 type === 'Personality'
-                  ? 'url("level/card_lvl_10.png")'
-                  : 'url("level/card_lvl_max.png")',
+                  ? 'url("level/card_lvl_10.webp")'
+                  : 'url("level/card_lvl_max.webp")',
             }}
           />
         </div>
