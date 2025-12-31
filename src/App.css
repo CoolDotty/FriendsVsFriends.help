@@ -210,6 +210,7 @@ a:active {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: flex-start;
   margin: 0 1rem;
   min-height: 30rem;
