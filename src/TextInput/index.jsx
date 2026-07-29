@@ -1,16 +1,12 @@
-import React, { forwardRef } from 'react';
-
+import { forwardRef } from 'react';
 import './styles.css';
 
-export default forwardRef(function TextInput(props, ref) {
-  const { value, onChange, ...rest } = props;
-
+export default forwardRef(function TextInput({ onChange, className = '', ...rest }, ref) {
   return (
     <input
       type="text"
-      className="TextInput"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
+      className={`TextInput ${className}`.trim()}
+      onChange={onChange ? (event) => onChange(event.target.value) : undefined}
       ref={ref}
       {...rest}
     />

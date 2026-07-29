@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Friendly Fire';
-  src: local('Friendly Fire'), url(../public/fonts/Friendly_Fire.ttf);
+  src: local('Friendly Fire'), url('/fonts/Friendly_Fire.ttf');
 }
 
 @font-face {
   font-family: 'Kenyan Coffee';
-  src: local('Kenyan Coffee'), url(../public/fonts/kenyan_coffee_rg.otf);
+  src: local('Kenyan Coffee'), url('/fonts/kenyan_coffee_rg.otf');
 }
 
 html,
@@ -115,7 +115,8 @@ a:active {
 
 .ShareMenu {
   position: absolute;
-  bottom: 0;
+  top: calc(100% - 0.5rem);
+  bottom: auto;
   right: 0.5rem; /* Same as .topMenu border radius */
   z-index: -1;
 
@@ -137,7 +138,8 @@ a:active {
 
 .LoadMenu {
   position: absolute;
-  bottom: 0;
+  top: calc(100% - 0.5rem);
+  bottom: auto;
   right: 0.5rem; /* Same as .topMenu border radius */
   z-index: -1;
 
@@ -204,6 +206,16 @@ a:active {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.filterControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterControl .TextInput {
+  width: min(18rem, 45vw);
 }
 
 .content {

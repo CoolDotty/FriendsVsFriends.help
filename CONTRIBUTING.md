@@ -1,19 +1,29 @@
-# Contributing to FvF-Decks
+# Contributing to FvF Deck Builder
 
-First off, thanks for taking the time to contribute! ❤️
+Thanks for taking the time to contribute! ❤️
 
-The easiest way to get start is by using free tier Gitpod. This will boot up a Linux workspace in
-the cloud and setup the project automatically.
+## Setup
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/KarlTheCool/fvf-decks)
+1. Install the Node.js version listed in `.nvmrc`.
+2. Enable pnpm through Corepack if it is not already available:
 
-Otherwise, following the
-[setup tasks in .gitpod.yml](https://github.com/KarlTheCool/fvf-decks/blob/main/.gitpod.yml) will
-get you going just as easily.
+   ```sh
+   corepack enable
+   ```
 
-Installing some form of ESLint,
-[like the plugin for vscode](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-is recommeneded. Whatever you use should automatically detect the
-[.eslintrc.js](https://github.com/KarlTheCool/fvf-decks/blob/main/.eslintrc.js)
+3. Install dependencies and start Vite:
 
-Have Fun!
+   ```sh
+   pnpm install
+   pnpm dev
+   ```
+
+## Before opening a pull request
+
+Run the complete check suite:
+
+```sh
+pnpm check
+```
+
+Use `pnpm format` to apply formatting fixes. Production builds are written to `dist/`.

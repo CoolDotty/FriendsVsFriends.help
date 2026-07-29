@@ -46,8 +46,23 @@
   flex: 1 1 auto;
 }
 
-.topMenu > div:nth-child(3) {
+.topMenuActions {
   display: flex;
   gap: 1rem;
   justify-content: end;
+}
+
+.invalidTotal,
+.importError {
+  color: rgb(255, 96, 96);
+}
+
+.importError,
+.playerLogHint {
+  margin: 0.75rem 0 0;
+}
+
+.playerLogHint code {
+  text-transform: none;
+  overflow-wrap: anywhere;
 }

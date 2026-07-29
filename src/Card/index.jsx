@@ -1,76 +1,65 @@
-import React, { useEffect, useRef } from 'react';
-import useHover from '../hooks/useHover';
+import { useRef } from 'react';
+import assetUrl from '../assetUrl';
 import './styles.css';
 
-export default function Card(props) {
-  const { card, equipped, ...rest } = props;
+export default function Card({ card, equipped, 'aria-label': ariaLabel, ...rest }) {
   const { name, img, cost, type } = card;
-
-  const containerRef = useRef();
   const contentRef = useRef();
 
-  const isHovered = useHover(containerRef);
+  const updateTilt = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const middleX = rect.width / 2;
+    const middleY = rect.height / 2;
+    const offsetX = ((event.clientX - rect.left - middleX) / middleX) * 9;
+    const offsetY = ((event.clientY - rect.top - middleY) / middleY) * 9;
 
-  useEffect(() => {
-    // https://codepen.io/kevinpowell/pen/GRBdLEv
-    const container = containerRef.current;
-    const content = contentRef.current;
+    contentRef.current?.style.setProperty('--rotateX', `${offsetX}deg`);
+    contentRef.current?.style.setProperty('--rotateY', `${-offsetY}deg`);
+  };
 
-    const onMouseMove = (e) => {
-      if (!isHovered) return;
-      // get mouse position
-      // relative to card
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+  const resetTilt = () => {
+    contentRef.current?.style.removeProperty('--rotateX');
+    contentRef.current?.style.removeProperty('--rotateY');
+  };
 
-      // find the middle
-      const middleX = container.offsetWidth / 2;
-      const middleY = container.offsetHeight / 2;
-
-      // get offset from middle as a percentage
-      // and tone it down a little
-      const offsetX = ((x - middleX) / middleX) * 9;
-      const offsetY = ((y - middleY) / middleY) * 9;
-
-      // set rotation
-      content.style.setProperty('--rotateX', `${offsetX}deg`);
-      content.style.setProperty('--rotateY', `${-1 * offsetY}deg`);
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-
-    return () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      // reset to no roation on exit
-      content.style = '';
-      content.style = '';
-    };
-  }, [isHovered]);
+  const defaultLabel = `${equipped ? 'Remove' : 'Add'} ${name} ${
+    equipped ? 'from' : 'to'
+  } deck`;
 
   return (
-    <div className="cardContainer" ref={containerRef} {...rest}>
-      <div className={`card ${equipped ? 'equipped' : ''}`} title={name} ref={contentRef}>
-        <div
+    <button
+      type="button"
+      className="cardContainer"
+      aria-label={ariaLabel ?? defaultLabel}
+      aria-pressed={equipped === undefined ? undefined : Boolean(equipped)}
+      onPointerMove={updateTilt}
+      onPointerLeave={resetTilt}
+      {...rest}>
+      <span
+        className={`card ${equipped ? 'equipped' : ''}`}
+        title={name}
+        ref={contentRef}>
+        <span
           className={`cardContent cost${cost}`}
-          style={{ backgroundImage: `url("cards/${img}")` }}>
-          <div
+          style={{ backgroundImage: `url("${assetUrl(`cards/${img}`)}")` }}>
+          <span
             className="cost"
             style={{
-              backgroundImage: `url("cost/card_cost_icon_${cost}.png")`,
+              backgroundImage: `url("${assetUrl(`cost/card_cost_icon_${cost}.webp`)}")`,
             }}
           />
-          <div
+          <span
             className="level"
             style={{
-              backgroundImage:
+              backgroundImage: `url("${assetUrl(
                 type === 'Personality'
-                  ? 'url("level/card_lvl_10.webp")'
-                  : 'url("level/card_lvl_max.webp")',
+                  ? 'level/card_lvl_10.webp'
+                  : 'level/card_lvl_max.webp'
+              )}")`,
             }}
           />
-        </div>
-      </div>
-    </div>
+        </span>
+      </span>
+    </button>
   );
 }

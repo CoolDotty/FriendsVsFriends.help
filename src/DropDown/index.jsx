@@ -1,24 +1,17 @@
-import React from 'react';
-import Select from 'react-select';
-
 import './styles.css';
 
-export default function DropDown(props) {
-  const { options, value, onChange } = props;
+export default function DropDown({ options, value, onChange, ...rest }) {
   return (
-    <Select
-      components={{
-        DropdownIndicator: () => null,
-        IndicatorSeparator: () => null,
-      }}
-      isSearchable={false}
-      className="react-select"
-      placeholder={value}
-      options={options}
-      unstyled
+    <select
+      className="DropDown"
       value={value}
-      onChange={(option) => onChange(option)}
-      clearable={false}
-    />
+      onChange={(event) => onChange(event.target.value)}
+      {...rest}>
+      {options.map((option) => (
+        <option value={option.value} key={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   );
 }
