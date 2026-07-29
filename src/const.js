@@ -25,6 +25,7 @@ export const defaultCardSort = (a, b) => {
 // 11 = The "Siaro" Update
 // 12 = 90's Drugstore Crime Update
 // 13 = Very Expensive Update
+// 14 = Dead Game Update
 
 const Card = (img, batch, type, name, cost) => ({
   id: parseInt(img.substring(5, 9), 10),
@@ -156,6 +157,12 @@ export const allCards = [
   Card('Card_1026_bake.webp', 12, 'Personality', 'Energy Boost', 2),
   Card('Card_1027_bake.webp', 12, 'Personality', 'Stuntman', 2),
   Card('Card_1028_bake.webp', 12, 'Personality', 'Determination', 2),
+  Card('Card_0169_bake.webp', 14, 'Debuff', 'The End', 2),
+  Card('Card_0170_bake.webp', 14, 'Buff', 'Trash Thief', 2),
+  Card('Card_0171_bake.webp', 14, 'Wild', 'Back to the Past', 2),
+  Card('Card_0172_bake.webp', 14, 'Helper', 'Life Support', 2),
+  Card('Card_0173_bake.webp', 14, 'Helper', 'Holy Lantern', 2),
+  Card('Card_1029_bake.webp', 14, 'Personality', 'Trash Thief', 2),
 ].sort(defaultCardSort);
 
 export const cards = allCards.filter(({ type }) => type !== 'Personality');
@@ -163,53 +170,3 @@ export const cards = allCards.filter(({ type }) => type !== 'Personality');
 export const personalities = allCards.filter(
   ({ id, type }) => type === 'Personality' && id !== 1999
 );
-
-export const personalityToId = (p) =>
-  ({
-    Classic: 'seagull',
-    'Thick Coat': 'polarbear',
-    'Power Legs': 'moose',
-    Runner: 'hare',
-    'Katana Lover': 'tiger',
-    "It's Medicinal": 'duck',
-    'Big Bullets': 'cat',
-    Brasslover: 'woodpecker',
-    'Dither & Banding': 'rat',
-    'Reading Glasses': 'crocodile',
-    Badass: 'doberman',
-    Roleplay: 'toad',
-    Arpeggio: 'cow',
-    'Undercover Agent': 'wolf',
-    'Left Behind': 'dingo',
-    'At The End Of The Road': 'dingo_laika',
-    'Venom Eater': 'dingo_siaro',
-    'Fluffy Wool': 'dingo_jawhara',
-    'Energy Boost': 'dingo_fennecfox',
-    Stuntman: 'dingo_turtle',
-    Determination: 'dingo_llama',
-  })[p];
-
-export const personalityToRender = (p) =>
-  ({
-    Classic: 'characters/character_full_seagull_default.webp',
-    'Thick Coat': 'characters/character_full_polarbear_default.webp',
-    'Power Legs': 'characters/character_full_moose_default.webp',
-    Runner: 'characters/character_full_hare_default.webp',
-    'Katana Lover': 'characters/character_full_tiger_default.webp',
-    "It's Medicinal": 'characters/character_full_duck_default.webp',
-    'Big Bullets': 'characters/character_full_cat_default.webp',
-    Brasslover: 'characters/character_full_woodpecker_default.webp',
-    'Dither & Banding': 'characters/character_full_rat_default.webp',
-    'Reading Glasses': 'characters/character_full_crocodile_default.webp',
-    Badass: 'characters/character_full_doberman_default.webp',
-    Roleplay: 'characters/character_full_toad_default.webp',
-    Arpeggio: 'characters/character_full_cow_default.webp',
-    'Undercover Agent': 'characters/character_full_wolf_default.webp',
-    'Left Behind': 'characters/character_full_dingo_default.webp',
-    'At The End Of The Road': 'characters/character_full_dingo_laika.webp',
-    'Venom Eater': 'characters/character_full_dingo_siaro.webp',
-    'Fluffy Wool': 'characters/character_full_dingo_jawhara.webp',
-    'Energy Boost': 'characters/character_full_dingo_fennecfox.webp',
-    Stuntman: 'characters/character_full_dingo_turtle.webp',
-    Determination: 'characters/character_full_dingo_llama.webp',
-  })[p];

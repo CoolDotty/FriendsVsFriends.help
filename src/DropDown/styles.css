@@ -1,63 +1,35 @@
-.react-select {
-  width: 4em;
+.DropDown {
+  width: 5em;
+  color: inherit;
+  font: inherit;
+  font-family: 'Friendly Fire';
+  text-transform: uppercase;
+  text-shadow:
+    -0.1em -0.1em 0 #000,
+    0.1em -0.1em 0 #000,
+    -0.1em 0.1em 0 #000,
+    0.1em 0.1em 0 #000,
+    0 -0.1em 0 #000,
+    0.1em 0 0 #000,
+    0 0.1em 0 #000,
+    -0.1em 0 0 #000;
+  letter-spacing: 0.1em;
   background-color: rgb(242, 175, 28);
-  border: solid rgb(200, 144, 21) 0;
+  border: 0;
   border-bottom: solid rgb(200, 144, 21) 0.2em;
   outline: solid black 0.1em;
   border-radius: 0.5em;
-  padding: 0 0.5em;
-  padding-bottom: 0.5em;
-  user-select: none;
-
-  transition:
-    border-color 0.1s,
-    background-color 0.1s,
-    color 0.1s,
-    outline 0.1s;
+  padding: 0 0.5em 0.3em;
+  cursor: pointer;
 }
 
-.react-select *[class$='placeholder'] {
-  transition: transform 0.1s;
-  transform: scale(1);
+.DropDown:hover,
+.DropDown:focus-visible {
+  outline-color: white;
 }
 
-.react-select:hover *[class$='placeholder'] {
-  transform: scale(0.9);
-}
-
-.react-select:hover {
-  border-color: transparent;
-  outline: solid white 0.1em;
-}
-
-/* I hate css in js :cry: */
-.react-select *[class$='menu'] {
-  background-color: rgb(242, 175, 28);
-  border: solid rgb(200, 144, 21) 0;
-  border-bottom: solid rgb(200, 144, 21) 0.2em;
-  outline: solid black 0.1em;
-  border-radius: 0.5em;
-}
-
-.react-select *[class$='option'] {
-  transition:
-    transform 0.1s,
-    color 0.1s;
-  transform: scale(1);
-  color: white;
-}
-
-.react-select *[class$='option']:hover {
-  transform: scale(0.9);
-  color: rgb(255, 71, 178);
-}
-
-.react-select *[class$='placeholder'],
-.react-select *[class$='singleValue'],
-.react-select *[class$='option'] {
-  padding: 0 0.5em;
-}
-
-.react-select *[class$='control'] {
-  min-height: unset;
+.DropDown option {
+  color: black;
+  background: white;
+  text-shadow: none;
 }

@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Friendly Fire';
-  src: local('Friendly Fire'), url(../public/fonts/Friendly_Fire.ttf);
+  src: local('Friendly Fire'), url('/fonts/Friendly_Fire.ttf');
 }
 
 @font-face {
   font-family: 'Kenyan Coffee';
-  src: local('Kenyan Coffee'), url(../public/fonts/kenyan_coffee_rg.otf);
+  src: local('Kenyan Coffee'), url('/fonts/kenyan_coffee_rg.otf');
 }
 
 html,
@@ -86,13 +86,6 @@ a:active {
   flex-wrap: wrap;
 }
 
-.myDeck > .characterArt {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-repeat: no-repeat;
-}
-
 .title {
   display: flex;
   align-items: center;
@@ -115,7 +108,8 @@ a:active {
 
 .ShareMenu {
   position: absolute;
-  bottom: 0;
+  top: calc(100% - 0.5rem);
+  bottom: auto;
   right: 0.5rem; /* Same as .topMenu border radius */
   z-index: -1;
 
@@ -132,12 +126,18 @@ a:active {
   font-size: 0.7em;
 
   transform-origin: top;
-  transition: transform 0.1s;
+  transform: scaleY(0);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.1s,
+    visibility 0s 0.1s;
 }
 
 .LoadMenu {
   position: absolute;
-  bottom: 0;
+  top: calc(100% - 0.5rem);
+  bottom: auto;
   right: 0.5rem; /* Same as .topMenu border radius */
   z-index: -1;
 
@@ -154,7 +154,22 @@ a:active {
   font-size: 0.7em;
 
   transform-origin: top;
-  transition: transform 0.1s;
+  transform: scaleY(0);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.1s,
+    visibility 0s 0.1s;
+}
+
+.ShareMenu.open,
+.LoadMenu.open {
+  transform: scaleY(1);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.1s,
+    visibility 0s;
 }
 
 .ShareContainer {
@@ -204,6 +219,16 @@ a:active {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.filterControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterControl .TextInput {
+  width: min(18rem, 45vw);
 }
 
 .content {

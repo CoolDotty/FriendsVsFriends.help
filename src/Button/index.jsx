@@ -1,17 +1,12 @@
-import React from 'react';
-
 import './styles.css';
 
-export default function Button(props) {
-  const { onClick, label, forceActive } = props;
-
+export default function Button({ label, forceActive = false, className = '', ...rest }) {
   return (
     <button
       type="button"
-      className={`Button ${forceActive ? 'forceActive' : ''}`}
-      onClick={onClick}
-      aria-label={label}>
-      <div>{label}</div>
+      className={`Button ${forceActive ? 'forceActive' : ''} ${className}`.trim()}
+      {...rest}>
+      <span>{label}</span>
     </button>
   );
 }

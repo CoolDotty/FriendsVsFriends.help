@@ -4,6 +4,11 @@
   font-size: 1rem;
   width: 11em;
   height: 15em;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
 }
 
 @media (max-width: 750px) {
@@ -25,12 +30,19 @@
     transform 0.1s,
     border-color 0.1s;
   transform-style: preserve-3d;
-  transform: scale(0.9) perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+  transform: scale(0.9) perspective(5000px) rotateY(var(--rotateX))
+    rotateX(var(--rotateY));
 }
 
 .cardContainer:hover > .card {
   transform: scale(1) perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
   border-color: rgb(28, 242, 114) !important;
+}
+
+.cardContainer:focus-visible {
+  outline: 0.25em solid white;
+  outline-offset: 0.25em;
+  border-radius: 0.5em;
 }
 
 .card:active {
@@ -79,6 +91,7 @@
 
 .card > .cardContent {
   position: relative;
+  display: block;
   width: 10em;
   aspect-ratio: 5/7;
   background-size: contain;
@@ -110,4 +123,15 @@
   background-repeat: no-repeat;
   pointer-events: none;
   opacity: 0.8;
-} 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: border-color 0.1s;
+    transform: scale(0.9);
+  }
+
+  .cardContainer:hover > .card {
+    transform: scale(1);
+  }
+}

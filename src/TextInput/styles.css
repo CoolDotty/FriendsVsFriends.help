@@ -13,6 +13,7 @@
   padding: 0.5rem;
 }
 
-.TextInput:focus {
-  outline: none;
+.TextInput:focus-visible {
+  outline: 0.2rem solid rgb(242, 175, 28);
+  outline-offset: 0.1rem;
 }

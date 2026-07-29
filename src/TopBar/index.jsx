@@ -1,184 +1,159 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { useRef, useState } from 'react';
+import assetUrl from '../assetUrl';
 import Button from '../Button';
-import TextInput from '../TextInput';
+import { createDeckHref } from '../deckUrl';
 import Modal from '../Modal';
+import { parsePlayerLog } from '../playerLog';
+import TextInput from '../TextInput';
 import { MAX_COST, MIN_CARDS } from '../const';
 import './styles.css';
 
-/* https://stackoverflow.com/questions/67399620/how-to-make-open-url-on-click-on-button-in-reactjs */
-const openInNewTab = (url) => {
+function openInNewTab(url) {
   const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
   if (newWindow) newWindow.opener = null;
-};
-
-/* https://medium.com/@ctrlaltmonique/how-to-create-a-custom-file-upload-button-in-react-with-typescript-b08150f1532e */
-function handleFileUpload(e) {
-  const { files } = e.target;
-  if (!files) return;
-
-  const file = files[0];
-  const reader = new FileReader();
-  reader.onload = () => {
-    /* process the player.log file */
-    const fileContentArray = reader.result.split('\n');
-    let userString;
-    for (let i = 0; i < fileContentArray.length; i += 1) {
-      const line = fileContentArray[i];
-      if (line.trim().startsWith('===> {"code":0,"user"')) {
-        userString = line;
-        break;
-      }
-    }
-    const userData = JSON.parse(userString.slice(4).trim()).user;
-    const inventory = userData.cards;
-    const divRoot = document.getElementById('decksHolder');
-    const root = createRoot(divRoot);
-    const DECKS = [];
-    userData.decks.forEach((deck) => {
-      const cardIds = [];
-      deck.cards.forEach((card) => {
-        inventory.forEach((invCard) => {
-          // eslint-disable-next-line no-underscore-dangle
-          if (invCard._id === card) {
-            cardIds.push(invCard.cardid);
-          }
-        });
-      });
-      const madeurl = `/?deck=${cardIds.join('.')}`;
-      DECKS.push({ name: deck.name, url: madeurl });
-    });
-    root.render(
-      DECKS.map((deck) => (
-        <Button
-          key={deck.name}
-          label={deck.name}
-          style={{ margin: '8px' }}
-          onClick={() => openInNewTab(deck.url)}
-        />
-      ))
-    );
-  };
-  reader.readAsText(file);
 }
 
 export default function TopBar({
   deckCost,
   deckCount,
-  isResetModalOpen,
-  setIsResetModalOpen,
-  setMyDeck,
-  shareMenuOpen,
-  setShareMenuOpen,
-  isLoadMenuOpen,
-  setIsLoadMenuOpen,
+  onReset,
+  shareableUrl,
   copyPasteRef,
-  inputRef,
-  tryToCopy,
+  onCopy,
 }) {
-  const handleButtonClick = (e) => {
-    e.preventDefault();
-    if (!inputRef || !inputRef.current) return;
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+  const [importedDecks, setImportedDecks] = useState([]);
+  const [importError, setImportError] = useState('');
+  const inputRef = useRef();
 
-    inputRef.current.click();
+  const toggleMenu = (menu) =>
+    setActiveMenu((currentMenu) => (currentMenu === menu ? null : menu));
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+
+    try {
+      setImportedDecks(parsePlayerLog(await file.text()));
+      setImportError('');
+    } catch (error) {
+      setImportedDecks([]);
+      setImportError(
+        error instanceof Error ? error.message : 'Could not read this file.'
+      );
+    }
   };
 
   return (
-    <div className="topMenuContainer">
+    <header className="topMenuContainer">
       <div className="topMenu">
         <div className="title">
-          <img className="logo" src="./favicon.ico" alt="" />
+          <img className="logo" src={assetUrl('favicon.ico')} alt="" />
           <span className="text">FvF Deck Builder</span>
         </div>
-        <div className="costMenu">
+
+        <div className="costMenu" aria-label="Deck totals">
           <span>
             Cost:{' '}
-            {deckCost > MAX_COST ? <b style={{ color: 'red' }}>{deckCost}</b> : deckCost}/
-            {MAX_COST}
+            {deckCost > MAX_COST ? (
+              <strong className="invalidTotal">{deckCost}</strong>
+            ) : (
+              deckCost
+            )}
+            /{MAX_COST}
           </span>
           <span>
             Count:{' '}
             {deckCount < MIN_CARDS ? (
-              <b style={{ color: 'red' }}>{deckCount}</b>
+              <strong className="invalidTotal">{deckCount}</strong>
             ) : (
               deckCount
             )}
             /{MIN_CARDS}
           </span>
         </div>
-        <div>
-          <Button onClick={() => setIsResetModalOpen(!isResetModalOpen)} label="Reset" />
-          <Modal
-            isOpen={isResetModalOpen}
-            onCancel={() => setIsResetModalOpen(false)}
-            onConfirm={() => {
-              setMyDeck([]);
-              setIsResetModalOpen(false);
-            }}
-          />
+
+        <nav className="topMenuActions" aria-label="Deck actions">
+          <Button onClick={() => setIsResetModalOpen(true)} label="Reset" />
           <Button
-            onClick={() => {
-              setShareMenuOpen(!shareMenuOpen);
-              setIsLoadMenuOpen(false);
-            }}
+            onClick={() => toggleMenu('share')}
             label="Share"
-            forceActive={shareMenuOpen}
+            forceActive={activeMenu === 'share'}
+            aria-expanded={activeMenu === 'share'}
           />
           <Button
-            onClick={() => {
-              setIsLoadMenuOpen(!isLoadMenuOpen);
-              setShareMenuOpen(false);
-            }}
+            onClick={() => toggleMenu('load')}
             label="Load"
+            forceActive={activeMenu === 'load'}
+            aria-expanded={activeMenu === 'load'}
           />
-        </div>
+        </nav>
       </div>
+
+      <Modal
+        isOpen={isResetModalOpen}
+        title="Clear Deck?"
+        onCancel={() => setIsResetModalOpen(false)}
+        onConfirm={() => {
+          onReset();
+          setIsResetModalOpen(false);
+        }}
+      />
+
       <div
-        className="ShareMenu"
-        aria-hidden={!shareMenuOpen}
-        style={{
-          transform: `translate(0%, 100%) scale(1.0, ${shareMenuOpen ? 1.0 : 0.0})`,
-        }}>
-        <div className="ShareContainer">
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="ShareCopyPastInput">Link:&nbsp;</label>
+        className={`ShareMenu ${activeMenu === 'share' ? 'open' : ''}`}
+        aria-hidden={activeMenu !== 'share'}
+        inert={activeMenu !== 'share'}>
+        <label className="ShareContainer" htmlFor="share-link">
+          Link:
           <TextInput
-            id="ShareCopyPastInput"
+            id="share-link"
             ref={copyPasteRef}
-            type="text"
-            value={`friendsvsfriends.help/${window.location.search}`}
+            value={shareableUrl}
             readOnly
-            onClick={tryToCopy}
+            onClick={onCopy}
           />
-        </div>
+        </label>
       </div>
+
       <div
-        className="LoadMenu"
-        aria-hidden={!isLoadMenuOpen}
-        style={{
-          transform: `translate(0%, 100%) scale(1.0, ${isLoadMenuOpen ? 1.0 : 0.0})`,
-        }}>
+        className={`LoadMenu ${activeMenu === 'load' ? 'open' : ''}`}
+        aria-hidden={activeMenu !== 'load'}
+        inert={activeMenu !== 'load'}>
         <div className="LoadContainer">
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <Button onClick={(e) => handleButtonClick(e)} label="Upload Player.log" />
+          <Button onClick={() => inputRef.current?.click()} label="Upload Player.log" />
           <input
             ref={inputRef}
             type="file"
-            id="fileInput"
+            accept=".log,.txt,text/plain"
             hidden
-            onChange={(e) => handleFileUpload(e)}
+            onChange={handleFileUpload}
           />
-          <div id="decksHolder" />
+          <div id="decksHolder">
+            {importedDecks.map((deck, index) => (
+              <Button
+                key={`${deck.name}-${index}`}
+                label={deck.name}
+                style={{ margin: '8px' }}
+                onClick={() =>
+                  openInNewTab(createDeckHref(deck.cardIds, window.location.href))
+                }
+              />
+            ))}
+          </div>
         </div>
-        {/* eslint-disable-next-line react/style-prop-object */}
-        <div style={{ marginTop: '0.5rem' }}>
-          <span>
-            Located in: /Users/
-            <span style={{ fontStyle: 'italic', opacity: 0.5 }}>your name</span>
-            /AppData/LocalLow/Brainwash Gang/Friends vs Friends/player.log
-          </span>
-        </div>
+        {importError && (
+          <p className="importError" role="alert">
+            {importError}
+          </p>
+        )}
+        <p className="playerLogHint">
+          Located in: /Users/<span className="playerNameHint">your name</span>
+          /AppData/LocalLow/Brainwash Gang/Friends vs Friends/player.log
+        </p>
       </div>
-    </div>
+    </header>
   );
 }

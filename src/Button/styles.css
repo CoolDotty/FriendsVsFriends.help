@@ -49,14 +49,14 @@
   color: rgb(255, 71, 178);
 }
 
-.Button > div {
+.Button > span {
   transition: transform 0.1s;
   transform: scale(1);
 }
 
-.Button:hover > div,
-.Button:active > div,
-.Button.forceActive > div {
+.Button:hover > span,
+.Button:active > span,
+.Button.forceActive > span {
   transform: scale(0.9);
 }
 
