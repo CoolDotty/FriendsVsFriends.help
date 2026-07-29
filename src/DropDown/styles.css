@@ -2,7 +2,18 @@
   width: 5em;
   color: inherit;
   font: inherit;
+  font-family: 'Friendly Fire';
   text-transform: uppercase;
+  text-shadow:
+    -0.1em -0.1em 0 #000,
+    0.1em -0.1em 0 #000,
+    -0.1em 0.1em 0 #000,
+    0.1em 0.1em 0 #000,
+    0 -0.1em 0 #000,
+    0.1em 0 0 #000,
+    0 0.1em 0 #000,
+    -0.1em 0 0 #000;
+  letter-spacing: 0.1em;
   background-color: rgb(242, 175, 28);
   border: 0;
   border-bottom: solid rgb(200, 144, 21) 0.2em;
@@ -20,4 +31,5 @@
 .DropDown option {
   color: black;
   background: white;
+  text-shadow: none;
 }

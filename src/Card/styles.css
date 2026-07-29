@@ -91,6 +91,7 @@
 
 .card > .cardContent {
   position: relative;
+  display: block;
   width: 10em;
   aspect-ratio: 5/7;
   background-size: contain;

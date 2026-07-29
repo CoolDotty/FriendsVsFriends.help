@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './reset.css';
 import './App.css';
-import assetUrl from './assetUrl';
 import Card from './Card';
 import DropDown from './DropDown';
 import Footer from './Footer';
@@ -9,7 +8,7 @@ import NotFound from './NotFound';
 import Radio from './Radio';
 import TextInput from './TextInput';
 import TopBar from './TopBar';
-import { allCards, defaultCardSort, personalityToRender } from './const';
+import { allCards, defaultCardSort } from './const';
 import useDeckState from './hooks/useDeckState';
 
 const CARD_TYPE_VALUE = {
@@ -75,10 +74,6 @@ export default function App() {
 
   const myCards = useMemo(
     () => myDeck.filter((card) => card.type !== 'Personality'),
-    [myDeck]
-  );
-  const myCharacters = useMemo(
-    () => myDeck.filter((card) => card.type === 'Personality'),
     [myDeck]
   );
   const deckIds = useMemo(() => new Set(myDeck.map((card) => card.id)), [myDeck]);
@@ -172,26 +167,6 @@ export default function App() {
               />
             ))}
           </div>
-        ))}
-
-        {myCharacters.map((card, index) => (
-          <div
-            key={`charart${card.id}`}
-            className="characterArt"
-            style={{
-              zIndex: (index + 1) * -1,
-              backgroundImage: `url("${assetUrl(personalityToRender(card.name))}")`,
-              backgroundSize: 'contain',
-              backgroundPosition: 'center right',
-              transform: `
-                translate(
-                  ${index * (-25 / myCharacters.length)}%,
-                  ${index * (-10 / myCharacters.length)}%
-                )
-                scale(${1 - (1 / myCharacters.length) * index})
-              `,
-            }}
-          />
         ))}
       </div>
 

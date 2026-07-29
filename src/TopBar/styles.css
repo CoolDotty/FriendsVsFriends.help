@@ -62,7 +62,11 @@
   margin: 0.75rem 0 0;
 }
 
-.playerLogHint code {
-  text-transform: none;
+.playerLogHint {
   overflow-wrap: anywhere;
+}
+
+.playerNameHint {
+  font-style: italic;
+  opacity: 0.5;
 }

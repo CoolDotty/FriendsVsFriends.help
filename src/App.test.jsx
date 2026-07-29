@@ -33,4 +33,33 @@ describe('App deck interactions', () => {
       screen.getAllByRole('button', { name: 'Remove Big Head from deck' })
     ).toHaveLength(2);
   });
+
+  it('keeps menus and the modal mounted for entry and exit animations', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const loadMenu = document.querySelector('.LoadMenu');
+    const modal = document.querySelector('.modal');
+
+    expect(loadMenu).toHaveAttribute('aria-hidden', 'true');
+    expect(loadMenu).not.toHaveClass('open');
+    expect(modal).toHaveAttribute('aria-hidden', 'true');
+    expect(modal).not.toHaveClass('open');
+
+    await user.click(screen.getByRole('button', { name: 'Load' }));
+    expect(loadMenu).toHaveAttribute('aria-hidden', 'false');
+    expect(loadMenu).toHaveClass('open');
+    expect(screen.getByText('your name')).toHaveClass('playerNameHint');
+    expect(loadMenu).toHaveTextContent(
+      'Located in: /Users/your name/AppData/LocalLow/Brainwash Gang/Friends vs Friends/player.log'
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Reset' }));
+    expect(modal).toHaveAttribute('aria-hidden', 'false');
+    expect(modal).toHaveClass('open');
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(modal).toHaveAttribute('aria-hidden', 'true');
+    expect(modal).not.toHaveClass('open');
+  });
 });

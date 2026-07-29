@@ -86,13 +86,6 @@ a:active {
   flex-wrap: wrap;
 }
 
-.myDeck > .characterArt {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-repeat: no-repeat;
-}
-
 .title {
   display: flex;
   align-items: center;
@@ -133,7 +126,12 @@ a:active {
   font-size: 0.7em;
 
   transform-origin: top;
-  transition: transform 0.1s;
+  transform: scaleY(0);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.1s,
+    visibility 0s 0.1s;
 }
 
 .LoadMenu {
@@ -156,7 +154,22 @@ a:active {
   font-size: 0.7em;
 
   transform-origin: top;
-  transition: transform 0.1s;
+  transform: scaleY(0);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.1s,
+    visibility 0s 0.1s;
+}
+
+.ShareMenu.open,
+.LoadMenu.open {
+  transform: scaleY(1);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.1s,
+    visibility 0s;
 }
 
 .ShareContainer {
