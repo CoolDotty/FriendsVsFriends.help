@@ -102,59 +102,58 @@ export default function TopBar({
         }}
       />
 
-      {activeMenu === 'share' && (
-        <div className="ShareMenu">
-          <label className="ShareContainer" htmlFor="share-link">
-            Link:
-            <TextInput
-              id="share-link"
-              ref={copyPasteRef}
-              value={shareableUrl}
-              readOnly
-              onClick={onCopy}
-            />
-          </label>
-        </div>
-      )}
+      <div
+        className={`ShareMenu ${activeMenu === 'share' ? 'open' : ''}`}
+        aria-hidden={activeMenu !== 'share'}
+        inert={activeMenu !== 'share'}>
+        <label className="ShareContainer" htmlFor="share-link">
+          Link:
+          <TextInput
+            id="share-link"
+            ref={copyPasteRef}
+            value={shareableUrl}
+            readOnly
+            onClick={onCopy}
+          />
+        </label>
+      </div>
 
-      {activeMenu === 'load' && (
-        <div className="LoadMenu">
-          <div className="LoadContainer">
-            <Button onClick={() => inputRef.current?.click()} label="Upload Player.log" />
-            <input
-              ref={inputRef}
-              type="file"
-              accept=".log,.txt,text/plain"
-              hidden
-              onChange={handleFileUpload}
-            />
-            <div id="decksHolder">
-              {importedDecks.map((deck, index) => (
-                <Button
-                  key={`${deck.name}-${index}`}
-                  label={deck.name}
-                  style={{ margin: '8px' }}
-                  onClick={() =>
-                    openInNewTab(createDeckHref(deck.cardIds, window.location.href))
-                  }
-                />
-              ))}
-            </div>
+      <div
+        className={`LoadMenu ${activeMenu === 'load' ? 'open' : ''}`}
+        aria-hidden={activeMenu !== 'load'}
+        inert={activeMenu !== 'load'}>
+        <div className="LoadContainer">
+          <Button onClick={() => inputRef.current?.click()} label="Upload Player.log" />
+          <input
+            ref={inputRef}
+            type="file"
+            accept=".log,.txt,text/plain"
+            hidden
+            onChange={handleFileUpload}
+          />
+          <div id="decksHolder">
+            {importedDecks.map((deck, index) => (
+              <Button
+                key={`${deck.name}-${index}`}
+                label={deck.name}
+                style={{ margin: '8px' }}
+                onClick={() =>
+                  openInNewTab(createDeckHref(deck.cardIds, window.location.href))
+                }
+              />
+            ))}
           </div>
-          {importError && (
-            <p className="importError" role="alert">
-              {importError}
-            </p>
-          )}
-          <p className="playerLogHint">
-            Usually located at{' '}
-            <code>
-              C:\Users\your name\AppData\LocalLow\Brainwash Gang\Friends vs
-              Friends\player.log
-            </code>
-          </p>
         </div>
-      )}
+        {importError && (
+          <p className="importError" role="alert">
+            {importError}
+          </p>
+        )}
+        <p className="playerLogHint">
+          Located in: /Users/<span className="playerNameHint">your name</span>
+          /AppData/LocalLow/Brainwash Gang/Friends vs Friends/player.log
+        </p>
+      </div>
     </header>
   );
 }

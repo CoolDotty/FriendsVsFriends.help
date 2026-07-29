@@ -16,24 +16,27 @@ export default function Modal({ isOpen, title, onCancel, onConfirm }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onCancel]);
 
-  if (!isOpen) return null;
-
   return (
     <>
       <div
-        className="modal open"
+        className={`modal ${isOpen ? 'open' : ''}`}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={titleId}>
+        aria-labelledby={titleId}
+        aria-hidden={!isOpen}
+        inert={!isOpen}>
         <h2 id={titleId}>{title}</h2>
         <Button onClick={onConfirm} label="Yes" />
         <Button onClick={onCancel} label="Cancel" />
       </div>
       <button
         type="button"
-        className="modalBackdrop open"
+        className={`modalBackdrop ${isOpen ? 'open' : ''}`}
         onClick={onCancel}
         aria-label="Close dialog"
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+        tabIndex={isOpen ? 0 : -1}
       />
     </>
   );
