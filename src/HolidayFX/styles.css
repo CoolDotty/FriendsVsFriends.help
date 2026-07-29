@@ -1,4 +1,4 @@
-#snowContainer {  
+#snowContainer {
   height: 100vh;
   z-index: -1;
   overflow: hidden;
@@ -9,7 +9,9 @@
 }
 
 .snow {
-  animation: fall ease-in infinite, sway ease-in-out infinite;
+  animation:
+    fall ease-in infinite,
+    sway ease-in-out infinite;
   color: skyblue;
   position: absolute;
   pointer-events: none;

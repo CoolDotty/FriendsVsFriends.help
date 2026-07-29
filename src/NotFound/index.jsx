@@ -1,15 +1,9 @@
-import React from 'react';
-
 import './styles.css';
 
-export default function NotFound(props) {
-  const { cardSearch } = props;
-
+export default function NotFound({ cardSearch }) {
   return (
     <div className="error">
-      No results for &ldquo;
-      {cardSearch}
-      &rdquo;
+      No results for &ldquo;{cardSearch}&rdquo;
       <br />
       💔
     </div>

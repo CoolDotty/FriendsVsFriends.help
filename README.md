@@ -1,15 +1,28 @@
 # Friends vs Friends Deck Builder
 
-https://friendsvsfriends.help/
+[friendsvsfriends.help](https://friendsvsfriends.help/)
+
+## Development
+
+This project uses Node.js 22+, pnpm, React, and Vite.
+
+```sh
+pnpm install
+pnpm dev
+```
+
+Run the complete local verification suite with:
+
+```sh
+pnpm check
+```
+
+Use `pnpm build-itch` to produce the relative-path itch build and `fvf-decks-itch.zip`.
 
 ## 🤝 Contributing
 
-Refer to the [contributing file](CONTRIBUTING.md) for a beginner-friendly guide on how you can
-contribute.
+Refer to [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
 
-<br>
+The site is hosted statically with [GitHub Pages](https://pages.github.com/).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app),
-hosted statically with [gh-pages](https://github.com/tschaub/gh-pages).
-
-![image](https://github.com/KarlTheCool/fvf-decks/assets/10494276/3e81ff03-aa0b-4ebe-80e2-c756c0cf927c)
+![Friends vs Friends Deck Builder](https://github.com/KarlTheCool/fvf-decks/assets/10494276/3e81ff03-aa0b-4ebe-80e2-c756c0cf927c)

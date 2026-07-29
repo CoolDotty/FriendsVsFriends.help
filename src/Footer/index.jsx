@@ -1,4 +1,3 @@
-import React from 'react';
 import './styles.css';
 
 export default function Footer() {
@@ -11,9 +10,11 @@ export default function Footer() {
       </div>
       <br />
       <div>
-        FvF-Decks is an{' '}
-        <a href="https://github.com/CoolDotty/fvf-decks">open-source project</a>{' '}
-        maintained with 💔 by all its contributors
+        FvF Deck Builder is an{' '}
+        <a href="https://github.com/CoolDotty/FriendsVsFriends.help">
+          open-source project
+        </a>{' '}
+        maintained with 💔 by its contributors
       </div>
     </footer>
   );

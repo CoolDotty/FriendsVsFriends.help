@@ -1,4 +1,6 @@
 .radio {
+  display: grid;
+  place-items: center;
   background-color: rgb(242, 175, 28);
   border: solid rgb(200, 144, 21) 0;
   border-bottom: solid rgb(200, 144, 21) 0.2em;
@@ -27,6 +29,22 @@
     background-color 0.1s,
     color 0.1s,
     outline 0.1s;
+}
+
+.radio:focus-within {
+  outline-color: white;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .radio:hover {
